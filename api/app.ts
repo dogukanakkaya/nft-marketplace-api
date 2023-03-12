@@ -29,7 +29,7 @@ app
         const data = nfts.map(nft => {
             const image = nft.tokenURI ? nft.image : `${url}/${nft.image}`
 
-            return { ...nft, image };
+            return { ...nft, image, ownedBy: "0x0000000000000000000000000000000000000000" };
         });
 
         return res.json(data);
