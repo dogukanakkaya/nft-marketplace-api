@@ -70,11 +70,12 @@ export function NFTs() {
             const r = await tx.wait();
 
             if (r.status === 1) {
+                // @todo: impl delete lambda
                 // you can lock this before tx starts to prevent remints after page refresh, i don't care
-                await request.send('/', {
-                    method: 'DELETE',
-                    body: JSON.stringify({ id }),
-                });
+                // await request.send('/', {
+                //     method: 'DELETE',
+                //     body: JSON.stringify({ id }),
+                // });
             }
 
             setTxStatus({
