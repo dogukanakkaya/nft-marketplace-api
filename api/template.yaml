@@ -8,7 +8,15 @@ Description: >
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Timeout: 10
+    Timeout: 30
+    MemorySize: 512
+    Environment:
+      Variables:
+        ALLOW_ORIGIN: http://localhost:5173
+    CodeUri: src/
+    Runtime: nodejs18.x
+    Architectures:
+      - x86_64
   Api:
     Cors:
       AllowMethods: "'GET,POST,DELETE,OPTIONS'"
@@ -19,20 +27,13 @@ Resources:
   GetNFTsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src/
       Handler: get-nfts.lambdaHandler
-      Runtime: nodejs18.x
-      Architectures:
-        - x86_64
       Events:
         ApiGatewayEvent:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api
           Properties:
             Path: /
             Method: get
-      Environment:
-        Variables:
-          ALLOW_ORIGIN: http://localhost:5173
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:
@@ -41,3 +42,21 @@ Resources:
         Sourcemap: true
         EntryPoints:
           - get-nfts.ts
+  PremintFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: premint.lambdaHandler
+      Events:
+        ApiGatewayEvent:
+          Type: Api
+          Properties:
+            Path: /premint
+            Method: post
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - premint.ts
