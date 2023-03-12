@@ -11,9 +11,6 @@ const config: HardhatUserConfig = {
       url: MUMBAI_RPC_URL,
       accounts: [`0x${PRIVATE_KEY}`]
     }
-  },
-  paths: {
-    artifacts: '../artifacts'
   }
 };
 
