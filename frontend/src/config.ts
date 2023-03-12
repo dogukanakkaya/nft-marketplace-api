@@ -1,5 +1,6 @@
 export const API_URL = import.meta.env.VITE_API_URL as string;
 
+export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 export const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS as string;
 export const ABI = [
     {

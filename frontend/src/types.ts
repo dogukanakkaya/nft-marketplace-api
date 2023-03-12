@@ -13,5 +13,13 @@ export interface MetadataAttributes {
 
 export interface NFT extends Metadata {
     id: string;
-    url?: string;
+    tokenURI?: string;
+    ownedBy?: string;
+}
+
+export enum TxStatus {
+    None,
+    Pending,
+    Success,
+    Fail
 }

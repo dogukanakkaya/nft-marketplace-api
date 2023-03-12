@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "alchemy-sdk": "^2.6.1",
     "ethers": "^6.1.0",
     "preact": "^10.11.3"
   },
