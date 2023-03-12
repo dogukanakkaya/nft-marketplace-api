@@ -1,6 +1,7 @@
-import { useContext, useState, useEffect } from "preact/hooks";
+import { useContext, useState, useEffect, useCallback } from "preact/hooks";
 import { ethers } from "ethers";
 import { ComponentChildren, createContext } from "preact";
+import { ABI, CONTRACT_ADDRESS } from "@/config";
 
 const MetamaskContext = createContext<{
     isMetamaskInstalled: boolean,
@@ -8,6 +9,7 @@ const MetamaskContext = createContext<{
     isMetamaskConnected: boolean,
     accounts: ethers.JsonRpcSigner[],
     provider?: ethers.BrowserProvider,
+    contract?: ethers.Contract
     connectToMetamask: () => Promise<void>
 }>({
     isMetamaskInstalled: false,
@@ -15,6 +17,7 @@ const MetamaskContext = createContext<{
     isMetamaskConnected: false,
     accounts: [] as ethers.JsonRpcSigner[],
     provider: undefined,
+    contract: undefined,
     connectToMetamask: async () => { }
 });
 
@@ -28,6 +31,7 @@ export function MetamaskProvider({ children }: { children: ComponentChildren }) 
     const [isMetamaskConnected, setIsMetamaskConnected] = useState(false);
     const [accounts, setAccounts] = useState<ethers.JsonRpcSigner[]>([]);
     const [provider, setProvider] = useState<ethers.BrowserProvider>();
+    const [contract, setContract] = useState<ethers.Contract>();
 
     // Check if Metamask is installed on component mount
     useEffect(() => {
@@ -59,12 +63,24 @@ export function MetamaskProvider({ children }: { children: ComponentChildren }) 
         }
     }
 
+    useEffect(() => {
+        !async function () {
+            if (provider) {
+                const signer = await provider.getSigner();
+                setContract(new ethers.Contract(CONTRACT_ADDRESS, ABI, signer));
+            }
+        }();
+    }, [provider])
+
+
+
     const value = {
         isMetamaskInstalled,
         isMetamaskLoading,
         isMetamaskConnected,
         accounts,
         provider,
+        contract,
         connectToMetamask
     };
 
