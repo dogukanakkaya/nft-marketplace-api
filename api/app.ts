@@ -43,6 +43,7 @@ app
         const bundlr = new Bundlr("http://node2.bundlr.network", "arweave", jwk);
 
         const idx = nfts.findIndex(nft => createId(nft.name) === id);
+        if (idx === -1) return res.json({ status: false });
 
         if (nfts[idx].url) {
             return res.json({ url: nfts[idx].url });
