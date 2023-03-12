@@ -10,3 +10,7 @@ export interface MetadataAttributes {
     trait_type: string;
     value: string | number;
 };
+
+export interface NFT extends Metadata {
+    url?: string;
+}
