@@ -5,3 +5,6 @@ deploy-dev:
 
 test:
 	npx hardhat test
+
+clean:
+	rm -rf artifacts cache typechain-types

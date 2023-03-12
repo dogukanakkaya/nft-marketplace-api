@@ -2,7 +2,7 @@ import { HardhatUserConfig, task } from "hardhat/config";
 import * as dotenv from 'dotenv';
 dotenv.config();
 import "@nomicfoundation/hardhat-toolbox";
-import { MUMBAI_RPC_URL, PRIVATE_KEY } from "./config";
+import { MUMBAI_RPC_URL, NFT_METADATA_SECRET, PRIVATE_KEY } from "./config";
 
 const config: HardhatUserConfig = {
   solidity: "0.8.18",
@@ -11,12 +11,15 @@ const config: HardhatUserConfig = {
       url: MUMBAI_RPC_URL,
       accounts: [`0x${PRIVATE_KEY}`]
     }
+  },
+  paths: {
+    artifacts: '../artifacts'
   }
 };
 
 task('deploy', 'Deploy a contract', async (_, hre) => {
   const Spacer = await hre.ethers.getContractFactory('Spacer');
-  const spacer = await Spacer.deploy();
+  const spacer = await Spacer.deploy(NFT_METADATA_SECRET);
   await spacer.deployed();
 
   console.log(spacer.address);
