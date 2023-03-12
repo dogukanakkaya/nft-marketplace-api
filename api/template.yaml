@@ -89,3 +89,7 @@ Resources:
                   - s3:GetObject
                   - s3:GetObjectAttributes
                 Resource: arn:aws:s3:::spacer-bucket/*
+              - Effect: "Allow"
+                Action:
+                  - "secretsmanager:GetSecretValue"
+                Resource: "arn:aws:secretsmanager:us-east-1:167336944100:secret:jwk-2BwjDx"
