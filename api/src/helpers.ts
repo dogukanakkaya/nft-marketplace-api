@@ -1,6 +1,7 @@
 import { APIGatewayProxyResult } from "aws-lambda";
 import { z } from "zod";
 import createKeccakHash from 'keccak';
+import { getSecret } from "./aws-services/secret-manager";
 
 export const handleError = (err: any): APIGatewayProxyResult => {
     if (err instanceof z.ZodError) {
@@ -16,8 +17,10 @@ export const handleError = (err: any): APIGatewayProxyResult => {
     };
 }
 
-export const createId = (...args: string[]) => {
-    const hash = createKeccakHash('keccak256').update(args.join('') + 'NFT_METADATA_SECRET_TODO').digest('hex');
+export const createId = async (...args: string[]) => {
+    const { METADATA_SECRET } = await getSecret('metadata-secret');
+
+    const hash = createKeccakHash('keccak256').update(args.join('') + METADATA_SECRET).digest('hex');
     return '0x' + hash;
 };
 

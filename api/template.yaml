@@ -105,10 +105,16 @@ Resources:
               - Effect: "Allow"
                 Action:
                   - "secretsmanager:GetSecretValue"
-                Resource: "arn:aws:secretsmanager:us-east-1:167336944100:secret:jwk-2BwjDx"
+                Resource:
+                  [
+                    "arn:aws:secretsmanager:us-east-1:167336944100:secret:metadata-secret-3IoKN7",
+                    "arn:aws:secretsmanager:us-east-1:167336944100:secret:jwk-2BwjDx",
+                  ]
               - Effect: Allow
                 Action:
-                  - dynamodb:PutItem
+                  - dynamodb:GetItem
                   - dynamodb:Scan
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
                   - dynamodb:DeleteItem
                 Resource: !GetAtt DynamoDBNFTTable.Arn
