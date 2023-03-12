@@ -6,8 +6,6 @@ import cors from 'cors';
 import Bundlr from "@bundlr-network/client";
 import { Metadata } from './types';
 import { JWKInterface } from 'arweave/node/lib/wallet';
-import crypto from 'node:crypto';
-import { NFT_METADATA_SECRET } from './config';
 import { createId } from './helper';
 
 const app = express();
@@ -24,7 +22,7 @@ app.use(async (_, __, next) => {
 
 app
     .get('/nfts', async (req, res) => {
-        const url = `${req.protocol}//${req.get('host')}`;
+        const url = `${req.protocol}://${req.get('host')}`;
         const { nfts } = app.locals as Locals;
 
         const data = nfts.map(nft => {
