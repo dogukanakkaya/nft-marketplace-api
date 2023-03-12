@@ -13,6 +13,7 @@ Globals:
     Environment:
       Variables:
         ALLOW_ORIGIN: http://localhost:5173
+        NFT_TABLE_NAME: !Ref DynamoDBNFTTable
     CodeUri: src/
     Runtime: nodejs18.x
     Architectures:
@@ -66,6 +67,18 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: spacer-bucket
+  DynamoDBNFTTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 3
+        WriteCapacityUnits: 3
   ExecutionRole:
     Type: AWS::IAM::Role
     Properties:
@@ -93,3 +106,9 @@ Resources:
                 Action:
                   - "secretsmanager:GetSecretValue"
                 Resource: "arn:aws:secretsmanager:us-east-1:167336944100:secret:jwk-2BwjDx"
+              - Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:Scan
+                  - dynamodb:DeleteItem
+                Resource: !GetAtt DynamoDBNFTTable.Arn

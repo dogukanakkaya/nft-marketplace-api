@@ -1,13 +1,21 @@
 import { APIGatewayProxyResult } from 'aws-lambda';
-import { NFT } from './types';
-import { ALLOW_ORIGIN, NULL_ADDRESS } from './config';
+import { ScanCommand } from "@aws-sdk/client-dynamodb";
+import { ALLOW_ORIGIN, NFT_TABLE_NAME, NULL_ADDRESS } from './config';
 import { handleError } from './helpers';
-import { getJSONFile } from './aws-services/s3';
+import { dynamoDBClient } from './aws-services/dynamodb';
 
 export const lambdaHandler = async (): Promise<APIGatewayProxyResult> => {
     try {
-        const nfts = await getJSONFile<NFT[]>('data.json');
-        const data = nfts.map(nft => ({ ...nft, ownedBy: NULL_ADDRESS }));
+        const { Items } = await dynamoDBClient.send(new ScanCommand({ TableName: NFT_TABLE_NAME }));
+
+        const data = Items?.map((item) => ({
+            id: item.id.S,
+            name: item.name.S,
+            description: item.description.S,
+            image: item.image.S,
+            ...(item.attributes ? { attributes: JSON.parse(item.attributes.S) } : {}),
+            ownedBy: NULL_ADDRESS
+        }));
 
         return {
             statusCode: 200,

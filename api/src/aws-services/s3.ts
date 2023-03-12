@@ -1,7 +1,7 @@
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
-import { BUCKET, REGION } from "../config";
+import { BUCKET } from "../config";
 
-const s3Client = new S3Client({ region: REGION });
+export const s3Client = new S3Client({});
 
 export const getJSONFile = async <T>(key: string): Promise<T> => {
     const { Body } = await s3Client.send(new GetObjectCommand({ Bucket: BUCKET, Key: key }));

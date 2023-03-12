@@ -1,12 +1,13 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { NFT } from './types';
-import { ALLOW_ORIGIN } from './config';
+import { ALLOW_ORIGIN, BUCKET } from './config';
 import { z } from 'zod';
 import { createArweaveUrl, createId, handleError } from './helpers';
 import Bundlr from "@bundlr-network/client";
 import { Readable } from 'stream';
 import { getSecret } from './aws-services/secret-manager';
-import { getFile, getJSONFile } from './aws-services/s3';
+import { getJSONFile, s3Client } from './aws-services/s3';
+import { GetObjectCommand } from '@aws-sdk/client-s3';
 
 export const Validator = z.object({
     id: z.string()
@@ -37,7 +38,7 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
             // upload image
             const { pathname } = new URL(nft.image);
             const [, ...key] = pathname.split('/');
-            const { Body, ContentType, ContentLength } = await getFile(key.join('/'));
+            const { Body, ContentType, ContentLength } = await s3Client.send(new GetObjectCommand({ Bucket: BUCKET, Key: key.join('/') }));
 
             const { id: imageId } = await bundlr.upload(Body as Readable, {
                 tags: [{ name: 'Content-Type', value: ContentType }]
