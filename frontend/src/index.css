@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .nft-image {
+        @apply relative mx-6;
+        transform: rotateX(45deg) rotateZ(-25deg);
+        transform-style: preserve-3d;
+        transition: .3s;
+    }
+
+    .nft-image+div {
+        transform: rotateX(45deg) rotateZ(-25deg);
+        transform-style: preserve-3d;
+        @apply transition duration-300;
+    }
+
+    .nft-image::before {
+        content: '';
+        @apply block absolute left-0 -bottom-2 w-full h-4;
+        background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+        transform: rotateX(90deg) translateY(-8px);
+    }
+
+    .nft-image::after {
+        content: '';
+        @apply block absolute top-0 -left-2 h-full w-4;
+        background: linear-gradient(180deg, rgba(0, 212, 255, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(2, 0, 36, 1) 100%);
+        transform: rotateY(90deg) translateX(8px);
+    }
+
+    .nft-image:hover,
+    .nft-image:hover+div {
+        @apply m-0 transform-none;
+    }
+}
