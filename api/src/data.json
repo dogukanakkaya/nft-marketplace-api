@@ -1,0 +1,74 @@
+[
+    {
+        "id": 1,
+        "name": "The Milky Way",
+        "description": "The Milky Way is the galaxy that contains our Solar System. Its name comes from the band of light seen in the night sky due to the stars that compose the galaxy.",
+        "image": "https://lazy-camp.s3.amazonaws.com/images/the-milky-way.png"
+    },
+    {
+        "id": 2,
+        "name": "Black Holes",
+        "description": "A black hole is a region of spacetime exhibiting gravitational acceleration so strong that nothing—no particles or even electromagnetic radiation such as light—can escape from it.",
+        "image": "https://lazy-camp.s3.amazonaws.com/images/black-holes.png"
+    },
+    {
+        "id": 3,
+        "name": "The Moon",
+        "description": "The Moon is Earth's only natural satellite. It is the fifth largest moon in the Solar System.",
+        "image": "https://lazy-camp.s3.amazonaws.com/images/the-moon.png"
+    },
+    {
+        "id": 4,
+        "name": "Mars",
+        "description": "Mars is the fourth planet from the Sun and the second-smallest planet in the Solar System, after Mercury. It is often referred to as the 'Red Planet' due to its reddish appearance.",
+        "image": "https://lazy-camp.s3.amazonaws.com/images/mars.png"
+    },
+    {
+        "id": 5,
+        "name": "The Sun",
+        "description": "The Sun is the star at the center of the Solar System. It is a nearly perfect sphere of hot plasma, with internal convective motion that generates a magnetic field via a dynamo process.",
+        "image": "https://lazy-camp.s3.amazonaws.com/images/the-sun.png"
+    },
+    {
+        "id": 6,
+        "name": "Jupiter",
+        "description": "Jupiter is the fifth planet from the Sun and the largest planet in the Solar System. It is a gas giant with a mass one-thousandth that of the Sun, but two and a half times that of all the other planets in the Solar System combined.",
+        "image": "https://lazy-camp.s3.amazonaws.com/images/jupiter.png"
+    },
+    {
+        "id": 7,
+        "name": "Saturn",
+        "description": "Saturn is the sixth planet from the Sun and the second-largest in the Solar System, after Jupiter. It is a gas giant with an average radius about nine times that of Earth.",
+        "image": "https://lazy-camp.s3.amazonaws.com/images/saturn.png"
+    },
+    {
+        "id": 8,
+        "name": "The Hubble Space Telescope",
+        "description": "The Hubble Space Telescope is a space telescope that was launched into low Earth orbit in 1990 and remains in operation. It has captured some of the most detailed images of space ever seen.",
+        "image": "https://lazy-camp.s3.amazonaws.com/images/the-hubble-space-telescope.png"
+    },
+    {
+        "id": 9,
+        "name": "The International Space Station",
+        "description": "The International Space Station is a modular space station in low Earth orbit that is a joint project between five space agencies. It serves as a microgravity and space environment research laboratory.",
+        "image": "https://lazy-camp.s3.amazonaws.com/images/the-international-space-station.png"
+    },
+    {
+        "id": 10,
+        "name": "The Orion Nebula",
+        "description": "The Orion Nebula is a diffuse nebula situated in the Milky Way, being south of Orion's Belt in the constellation Orion. It is one of the most scrutinized and photographed objects in the night sky.",
+        "image": "https://lazy-camp.s3.amazonaws.com/images/the-orion-nebula.png"
+    },
+    {
+        "id": 11,
+        "name": "Dying Stars",
+        "description": "Dying stars are celestial objects that have exhausted their fuel and are in the final stages of their life cycle. As they run out of fuel, they undergo a series of changes that cause them to expand and contract, and eventually collapse in on themselves. This process can lead to the formation of a black hole, a neutron star, or a white dwarf, depending on the size of the star. Dying stars are important to study because they help us understand the evolution of stars and the universe as a whole.",
+        "image": "https://lazy-camp.s3.amazonaws.com/images/dying-stars.png"
+    },
+    {
+        "id": 12,
+        "name": "The Big Bang",
+        "description": "The Big Bang is the scientific theory that explains the origins of the universe. According to this theory, the universe began as a singularity, a point of infinite density and temperature. About 13.8 billion years ago, this singularity began to expand rapidly, creating the universe as we know it today. The Big Bang theory is supported by a wide range of observational evidence, including the cosmic microwave background radiation, the abundance of light elements, and the large-scale structure of the universe.",
+        "image": "https://lazy-camp.s3.amazonaws.com/images/the-big-bang.png"
+    }
+]
