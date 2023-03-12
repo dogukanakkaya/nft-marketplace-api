@@ -34,6 +34,7 @@ Resources:
           Properties:
             Path: /
             Method: get
+      Role: !GetAtt ExecutionRole.Arn
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:
@@ -52,6 +53,7 @@ Resources:
           Properties:
             Path: /premint
             Method: post
+      Role: !GetAtt ExecutionRole.Arn
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:
@@ -60,3 +62,30 @@ Resources:
         Sourcemap: true
         EntryPoints:
           - premint.ts
+  SpacerBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: spacer-bucket
+  ExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Path: /
+      Policies:
+        - PolicyName: !Sub ${AWS::StackName}-policty
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:GetObjectAttributes
+                Resource: arn:aws:s3:::spacer-bucket/*

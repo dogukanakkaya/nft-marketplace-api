@@ -2,34 +2,12 @@
 # https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-config.html
 version = 0.1
 
-[default]
-[default.global]
-[default.global.parameters]
-stack_name = "_api"
-
-[default.build]
-[default.build.parameters]
-cached = true
-parallel = true
-
-[default.deploy]
-[default.deploy.parameters]
+[dev]
+[dev.deploy]
+[dev.deploy.parameters]
+stack_name = "spacer"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-6zb7yx7mx5pa"
+s3_prefix = "spacer"
+region = "us-east-1"
 capabilities = "CAPABILITY_IAM"
-confirm_changeset = true
-resolve_s3 = true
-
-[default.package]
-[default.package.parameters]
-resolve_s3 = true
-
-[default.sync]
-[default.sync.parameters]
-watch = true
-
-[default.local_start_api]
-[default.local_start_api.parameters]
-warm_containers = "EAGER"
-
-[default.local_start_lambda]
-[default.local_start_lambda.parameters]
-warm_containers = "EAGER"
+image_repositories = []
