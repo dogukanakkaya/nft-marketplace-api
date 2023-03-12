@@ -22,17 +22,14 @@ app.use(async (_, __, next) => {
 });
 
 app
-    .get('/nfts', async (req, res) => {
+    .get('/', async (req, res) => {
         const url = `${req.protocol}://${req.get('host')}`;
         const { nfts } = app.locals as Locals;
 
         const data = nfts.map(nft => {
-            const image = nft.url ? nft.image : `${url}/${nft.image}`
+            const image = nft.tokenURI ? nft.image : `${url}/${nft.image}`
 
-            // create the hash to validate if this is a valid NFT belongs to this project
-            const id = createId(nft.name);
-
-            return { ...nft, image, id };
+            return { ...nft, image };
         });
 
         return res.json(data);
@@ -42,32 +39,54 @@ app
         const { nfts, jwk } = app.locals as Locals;
         const bundlr = new Bundlr("http://node2.bundlr.network", "arweave", jwk);
 
-        const idx = nfts.findIndex(nft => createId(nft.name) === id);
+        const idx = nfts.findIndex(nft => nft.id === id);
         if (idx === -1) return res.json({ status: false });
 
-        if (nfts[idx].url) {
-            return res.json({ url: nfts[idx].url });
+        if (nfts[idx].tokenURI) {
+            return res.json({
+                url: nfts[idx].tokenURI,
+                name: nfts[idx].name,
+                id: createId(nfts[idx].tokenURI, nfts[idx].name)
+            });
         }
 
         const imagePath = `./static/${nfts[idx].image}`;
 
+        // fund the bundlr with the price needed for file
         const { size } = await fs.stat(imagePath);
         const price = await bundlr.getPrice(size);
         await bundlr.fund(price);
 
+        // upload image
         const { id: imageId } = await bundlr.uploadFile(imagePath);
 
+        // upload metadata json
         const metadata = { ...nfts[idx], image: `https://arweave.net/${imageId}` };
         const { id: metadataId } = await bundlr.upload(JSON.stringify(metadata), {
             tags: [{ name: "Content-Type", value: "application/json" }]
         });
 
+        // update the nft data and write to file again
         nfts[idx].image = metadata.image;
-        nfts[idx].url = `https://arweave.net/${metadataId}`;
-
+        nfts[idx].tokenURI = `https://arweave.net/${metadataId}`;
         await fs.writeFile(DATA_FILE, JSON.stringify(nfts));
 
-        return res.json({ url: nfts[idx].url });
+        return res.json({
+            url: nfts[idx].tokenURI,
+            name: nfts[idx].name,
+            // create the hash to validate if this is a valid NFT belongs to this project, add description too to the hash
+            // also edit the Contract if description is added. Unnecessary for test app
+            id: createId(nfts[idx].tokenURI, nfts[idx].name)
+        });
+    })
+    .delete('/', async (req, res) => {
+        const { id } = req.body;
+        const { nfts } = app.locals as Locals;
+
+        const data = nfts.filter(nft => nft.id !== id);
+        await fs.writeFile(DATA_FILE, JSON.stringify(data));
+
+        return res.json({ status: true });
     });
 
 app.listen(process.env.PORT || 8000);

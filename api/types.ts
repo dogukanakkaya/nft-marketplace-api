@@ -12,5 +12,6 @@ export interface MetadataAttributes {
 };
 
 export interface NFT extends Metadata {
-    url?: string;
+    id: string;
+    tokenURI?: string;
 }
