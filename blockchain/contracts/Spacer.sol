@@ -19,7 +19,7 @@ contract Spacer is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
     }
 
     function mint(string memory uri, string memory name, bytes32 id) public onlyOwner {
-        require(validateId(name, id), "Invalid Hash");
+        require(validateId(uri, name, id), "Invalid Hash");
         
         _tokenIdCounter.increment();
         uint256 tokenId = _tokenIdCounter.current();
@@ -40,7 +40,7 @@ contract Spacer is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
         return super.tokenURI(tokenId);
     }
 
-    function validateId(string memory name, bytes32 id) private view returns(bool) {
-        return keccak256(abi.encodePacked(name, nftMetadataSecret)) == id;
+    function validateId(string memory uri, string memory name, bytes32 id) private view returns(bool) {
+        return keccak256(abi.encodePacked(uri, name, nftMetadataSecret)) == id;
     }
 }
