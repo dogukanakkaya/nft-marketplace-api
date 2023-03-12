@@ -27,7 +27,7 @@ app
         const { nfts } = app.locals as Locals;
 
         const data = nfts.map(nft => {
-            const image = `${url}/${nft.image}`
+            const image = nft.url ? nft.image : `${url}/${nft.image}`
 
             // create the hash to validate if this is a valid NFT belongs to this project
             const id = createId(nft.name);
