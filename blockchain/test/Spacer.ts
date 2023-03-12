@@ -47,7 +47,7 @@ describe("Spacer", function () {
     });
 
     it("should fail with invalid id", async function () {
-      const { spacer, owner } = await loadFixture(deploySpacerFixture);
+      const { spacer } = await loadFixture(deploySpacerFixture);
 
       const uri = "ipfs://QmS26tT33BkTjJt8sMPtG4f4Jmfq3qMzZphYMsX9LdZRVH";
       await expect(spacer.mint(uri, name, invalidId)).to.be.revertedWith('Invalid Hash');
