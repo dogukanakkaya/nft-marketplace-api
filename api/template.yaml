@@ -11,7 +11,7 @@ Globals:
     MemorySize: 512
     Environment:
       Variables:
-        ALLOW_ORIGIN: http://localhost:5173
+        ALLOW_ORIGIN: https://nft-marketplace-frontend.deno.dev
         NFT_TABLE_NAME: !Ref DynamoDBNFTTable
     CodeUri: src/
     Runtime: nodejs18.x
@@ -21,7 +21,7 @@ Globals:
     Cors:
       AllowMethods: "'GET,POST,DELETE,OPTIONS'"
       AllowHeaders: "'content-type'"
-      AllowOrigin: "'http://localhost:5173'"
+      AllowOrigin: "'https://nft-marketplace-frontend.deno.dev'"
 
 Resources:
   GetNFTsFunction:
