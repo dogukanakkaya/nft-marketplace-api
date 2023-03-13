@@ -1,7 +1,7 @@
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { ethers } from "hardhat";
 import { expect } from "chai";
-import { getTokenIdFromReceipt } from "../helper";
+import { getTokenIdFromReceipt } from "../helpers";
 import { NFT_METADATA_SECRET } from "../config";
 
 describe("Spacer", function () {
