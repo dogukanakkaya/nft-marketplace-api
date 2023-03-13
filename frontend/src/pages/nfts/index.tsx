@@ -54,8 +54,6 @@ export function NFTs() {
     }, [accounts])
 
     const handleMint = async (id: string) => {
-        console.log(contract);
-
         if (!contract) {
             alert('Please connect your wallet first.');
             return;
