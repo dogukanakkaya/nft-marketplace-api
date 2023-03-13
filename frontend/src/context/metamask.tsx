@@ -65,14 +65,15 @@ export function MetamaskProvider({ children }: { children: ComponentChildren }) 
 
     useEffect(() => {
         !async function () {
-            if (provider) {
-                const signer = await provider.getSigner();
-                setContract(new ethers.Contract(CONTRACT_ADDRESS, ABI, signer));
-            }
+            if (!provider) return;
+
+            const accounts = await provider.listAccounts();
+            if (!accounts.length) return;
+
+            const signer = await provider.getSigner();
+            setContract(new ethers.Contract(CONTRACT_ADDRESS, ABI, signer));
         }();
-    }, [provider])
-
-
+    }, [provider, accounts])
 
     const value = {
         isMetamaskInstalled,
