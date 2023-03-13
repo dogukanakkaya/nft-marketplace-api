@@ -5,7 +5,6 @@ Description: >
 
   Sample SAM Template for _api
 
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
     Timeout: 30
@@ -36,7 +35,7 @@ Resources:
             Path: /
             Method: get
       Role: !GetAtt ExecutionRole.Arn
-    Metadata: # Manage esbuild properties
+    Metadata:
       BuildMethod: esbuild
       BuildProperties:
         Minify: true
@@ -55,7 +54,7 @@ Resources:
             Path: /premint
             Method: post
       Role: !GetAtt ExecutionRole.Arn
-    Metadata: # Manage esbuild properties
+    Metadata:
       BuildMethod: esbuild
       BuildProperties:
         Minify: true
@@ -63,6 +62,25 @@ Resources:
         Sourcemap: true
         EntryPoints:
           - premint.ts
+  DeleteFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: delete.lambdaHandler
+      Events:
+        ApiGatewayEvent:
+          Type: Api
+          Properties:
+            Path: /{id}
+            Method: delete
+      Role: !GetAtt ExecutionRole.Arn
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - delete.ts
   SpacerBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -93,7 +111,7 @@ Resources:
         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
       Path: /
       Policies:
-        - PolicyName: !Sub ${AWS::StackName}-policty
+        - PolicyName: !Sub ${AWS::StackName}-policy
           PolicyDocument:
             Version: "2012-10-17"
             Statement:

@@ -22,7 +22,7 @@ export const lambdaHandler = async (): Promise<APIGatewayProxyResult> => {
             headers: {
                 "Access-Control-Allow-Headers": "Content-Type",
                 "Access-Control-Allow-Origin": ALLOW_ORIGIN,
-                "Access-Control-Allow-Methods": "GET,POST,DELETE,OPTIONS",
+                "Access-Control-Allow-Methods": "GET,OPTIONS",
             },
             body: JSON.stringify(data)
         };
