@@ -221,7 +221,7 @@ export const ABI = [
         ],
         "name": "mint",
         "outputs": [],
-        "stateMutability": "nonpayable",
+        "stateMutability": "payable",
         "type": "function"
     },
     {

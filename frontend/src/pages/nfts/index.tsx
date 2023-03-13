@@ -5,6 +5,7 @@ import { request } from '@/helpers';
 import { Card } from '@/components/nfts/card';
 import { alchemy } from '@/services/nfts-service';
 import { CONTRACT_ADDRESS } from '@/config';
+import { ethers } from 'ethers';
 
 export function NFTs() {
     const [lazyNFTs, setLazyNFTs] = useState<NFT[]>([]);
@@ -67,7 +68,7 @@ export function NFTs() {
                 body: JSON.stringify({ id }),
             });
 
-            const tx = await contract.mint(result.url, result.name, result.id);
+            const tx = await contract.mint(result.url, result.name, result.id, { from: accounts[0].address, value: ethers.parseEther('0.01') });
             const r = await tx.wait();
 
             if (r.status === 1) {
@@ -92,7 +93,7 @@ export function NFTs() {
         <div className="container mx-auto mt-8">
             {
                 data.length ? (
-                    <div className="grid grid-cols-4 gap-8">
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
                         {
                             data.map(item => <Card
                                 item={item}
