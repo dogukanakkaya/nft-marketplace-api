@@ -18,8 +18,9 @@ contract Spacer is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
         nftMetadataSecret = _nftMetadataSecret;
     }
 
-    function mint(string memory uri, string memory name, bytes32 id) public onlyOwner {
+    function mint(string memory uri, string memory name, bytes32 id) public payable {
         require(validateId(uri, name, id), "Invalid Hash");
+        require(msg.value == 0.01 ether, "0.01 ether is required");
         
         _tokenIdCounter.increment();
         uint256 tokenId = _tokenIdCounter.current();
